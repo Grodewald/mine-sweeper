@@ -52,16 +52,42 @@ define(['mine_sweeper_board/boardFactory'], function (boardFactory) {
                         expect(boardFactory.create(10,10).bombCount).toBe(0);
                     }
                 );
-                it('should return bombCount === bombs', function () {
-                        expect(boardFactory.create(10,10,6)
+
+                it('should return bombCount === bombs.length if all' + 
+                    ' bombs are in range.', 
+                    function () {
+                        expect(boardFactory.create(10,10,[10,15,22,92,95,97])
                             .bombCount).toBe(6);    
-                });
-                it('should return null if there are more bombs than spaces', 
-                    function() {
-                        expect(boardFactory.create(10,10,101)).toBe(null);
                     }
                 );
 
+                it('should return bombCount === bombs.length minus' +
+                    'the number of bombs that are out of range',
+                    function () {
+                        expect(boardFactory.create(10,10,
+                            [-10,-1,5,50,75,101,105,1000])
+                            .bombCount).toBe(3);
+
+                    }
+                );
+
+                it('should return bombCount === bombs.length minus' +
+                    'the number of bombs that are not integers',
+                    function () {
+                        expect(boardFactory.create(10,10,
+                            [0.3,0,1,2,5.5,90.2,'a','bed',99])
+                            .bombCount).toBe(4);
+                    }
+                );
+
+                it('should return bombCount == bombs.length minus' + 
+                    'the number of duplicates',
+                    function () {
+                        expect(boardFactory.create(10,10,
+                            [0,0,0,1,1,1,20,99,99,99,99])
+                            .bombCount).toBe(4);
+                    }
+                );
             });
         });
     });

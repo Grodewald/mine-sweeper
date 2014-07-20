@@ -8,24 +8,41 @@ define([], (function() {
     };
 
     create = function (width, height, bombs) {
-        var testForInvalidHeightandWidth, testForInvalidBombCount;
+        var bombArray, filterDuplicates, testForInvalidHeightandWidth,
+            testForValidBomb;
+
+        filterDuplicates = function (array) {
+            var previousValues = [];
+            return array.filter( function (value) {
+                if (previousValues.indexOf(value) === -1) {
+                    previousValues.push(value);
+                    return true;
+                }
+                return false;
+            });
+        };
 
         testForInvalidHeightandWidth = function () {
             return !(testForInt(width) && testForInt(height) &&
                 width > 0 && height > 0);
         };
 
-        testForInvalidBombCount = function () {
-            return bombs > (width * height);
+        testForValidBomb = function (bomb) {
+            return testForInt(bomb) && bomb >= 0 && bomb < width * height;
         };
 
-        if (testForInvalidHeightandWidth() || testForInvalidBombCount()) {
+        if (testForInvalidHeightandWidth()) {
             return null;
         }
+
+        if(bombs) {
+            bombArray = filterDuplicates(bombs.filter(testForValidBomb));
+        }
+
         return {
             width : width,
             height : height,
-            bombCount : bombs ? bombs : 0
+            bombCount : bombs ? bombArray.length : 0
         };
     };
 

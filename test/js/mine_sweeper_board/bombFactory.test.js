@@ -63,7 +63,8 @@ define(['mine_sweeper_board/bombFactory'], function (bombFactory) {
                         true);
                     };
                     expect(uniqueElementTest(twentyBombs)).toBeTruthy();
-                    // technically erratic test... but highly unlikely
+                    // technically erratic false positive test
+                    //... but highly unlikely
                     expect(uniqueElementTest(oneHundredBombs)).toBeTruthy();
                 });
 

@@ -1,0 +1,17 @@
+{
+  "name": "mine_sweeper_primer",
+  "version": "0.0.1",
+  "description": "primer for minesweeper app",
+  "main": "app.js",
+  "directories": {
+    "test": "test"
+  },
+
+  "devDependencies": {
+    "grunt": "~0.4.2",
+    "grunt-bower-task" : "~0.4.0"
+  },
+
+  "author": "Gustav Rodewald",
+  "license": "MIT"
+}

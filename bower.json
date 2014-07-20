@@ -1,0 +1,25 @@
+{
+  "name": "mine_sweeper_primer",
+  "version": "0.0.1",
+  "authors": [
+    "gustav.rodewald <gustav.rodewald@asurion.com>"
+  ],
+  "description": "mine sweeper primer app",
+  "main": "app.js",
+  "moduleType": [
+    "amd",
+    "node"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "requirejs": "~2.1.14"
+  }
+}

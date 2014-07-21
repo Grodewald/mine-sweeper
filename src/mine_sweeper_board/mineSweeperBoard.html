@@ -3,7 +3,7 @@
 <table>
     <tr ng-repeat="row in board track by $index">
         <td ng-repeat="cell in row">
-            {{ cell.bomb }}
+            <div ng-class="cell.style" ng-click="sweepCell(cell)" > {{ cell.bomb }} </div>
         </td>
     </tr>
 </table>

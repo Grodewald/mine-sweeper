@@ -1,0 +1,19 @@
+.unswept {
+    background-color: #000000;
+    width: 30px;
+    height: 30px;
+    margin: 0px;
+    text-align: center;
+    border-color: #FFFF00;
+    border-width: 3px;
+}
+
+.swept {
+    background-color: #B3B3B3;
+    width: 30px;
+    height: 30px;
+    margin: 0px;
+    text-align: center; 
+    border-color: #FFFF00;
+    border-width: 3px;
+}

@@ -19,6 +19,9 @@ module.exports = function (grunt){
                     { expand: true, src: ['src/mine_sweeper_board/*.html'],
                     dest: 'build/debug/views', flatten: true},
 
+                    { expand: true, src: ['src/mine_sweeper_board/*.css'],
+                    dest: 'build/debug/css', flatten: true},
+
                     { expand: true, src: ['lib/**/*'], dest: 'build/debug/js/'},
 
                     { expand: true, src: ['src/*.html'], dest: 'build/debug/', 

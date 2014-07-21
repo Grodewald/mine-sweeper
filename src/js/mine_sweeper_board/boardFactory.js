@@ -8,8 +8,42 @@ define([], (function() {
     };
 
     create = function (width, height, bombs) {
-        var bombArray, filterDuplicates, testForInvalidHeightandWidth,
-            testForValidBomb;
+        var boardWidth = width, boardHeight = height, bombArray, checkCell,
+            filterDuplicates, testForInvalidHeightandWidth, testForValidBomb;
+
+        checkCell = function (width, height, checkAdjacentCells) {
+            var adjacentBombs = 0, translateToBombValue;
+
+            translateToBombValue = function (width, height) {
+                return width + (height * boardWidth);
+            };
+
+            if (bombArray.indexOf(translateToBombValue(width,height)) !== -1) {
+                return -1;
+            }
+
+            if(checkAdjacentCells) {
+                adjacentBombs = adjacentBombs + 
+                    (checkCell(width -1, height -1, false) * -1);
+                adjacentBombs = adjacentBombs + 
+                    (checkCell(width -1, height, false) * -1);
+                adjacentBombs = adjacentBombs + 
+                    (checkCell(width -1, height +1, false) * -1);
+                adjacentBombs = adjacentBombs + 
+                    (checkCell(width, height -1, false) * -1);
+                adjacentBombs = adjacentBombs + 
+                    (checkCell(width, height + 1, false) * -1);
+                adjacentBombs = adjacentBombs + 
+                    (checkCell(width +1, height -1, false) * -1);
+                adjacentBombs = adjacentBombs + 
+                    (checkCell(width +1, height, false) * -1);
+                adjacentBombs = adjacentBombs + 
+                    (checkCell(width +1, height +1, false) * -1);
+            }
+            
+            return adjacentBombs;
+                   
+        };
 
         filterDuplicates = function (array) {
             var previousValues = [];
@@ -38,11 +72,17 @@ define([], (function() {
         if(bombs) {
             bombArray = filterDuplicates(bombs.filter(testForValidBomb));
         }
+        else {
+            bombArray = [];
+        }
 
         return {
-            width : width,
-            height : height,
-            bombCount : bombs ? bombArray.length : 0
+            checkCell : function (width, height) { 
+                return checkCell(width, height, true); 
+            },
+            bombCount : bombs ? bombArray.length : 0,
+            height : boardHeight,
+            width : boardWidth            
         };
     };
 

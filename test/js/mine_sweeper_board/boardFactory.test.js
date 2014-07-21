@@ -90,5 +90,94 @@ define(['mine_sweeper_board/boardFactory'], function (boardFactory) {
                 );
             });
         });
+
+        describe('checkCell', function () {
+            var bombArrayMapper, verifyBombCell;
+
+            bombArrayMapper = function (boardWidth, array) {
+                return array.map(function (value) {
+                    return value[0] + (boardWidth * value[1]);
+                });
+            }; 
+
+            verifyBombCell = function(bombs, cellToCheck, expectedValue) {
+                expect(boardFactory.create(10,10,bombArrayMapper(10,bombs))
+                    .checkCell(cellToCheck[0], cellToCheck[1]))
+                    .toBe(expectedValue);
+            };
+
+            it('should return 0 when the cell does not contain a bomb' + 
+                ' AND is not adjacent to a bomb', 
+                function() {
+                    verifyBombCell([],[4, 5],0);
+                }
+            );
+
+            it('should return 0 when the cell is out of range', function() {
+                verifyBombCell([],[0, 10],0);
+                verifyBombCell([],[10, 0],0);
+                verifyBombCell([],[-1, 1],0);
+                verifyBombCell([],['abc', 3],0);
+            });
+
+            it('should return -1 when the cell contains a bomb', function() {
+                verifyBombCell([[4, 5]], [4, 5], -1);
+            });
+
+            it('should return 1 when exacctly 1 adjacent cell' + 
+                ' conatins a bomb.', 
+                function () {
+                    verifyBombCell([[4, 4]], [5, 5], 1);
+                    verifyBombCell([[4, 5]], [5, 5], 1);
+                    verifyBombCell([[4, 6]], [5, 5], 1);
+                    verifyBombCell([[5, 4]], [5, 5], 1);
+                    verifyBombCell([[5, 6]], [5, 5], 1);
+                    verifyBombCell([[6, 4]], [5, 5], 1);
+                    verifyBombCell([[6, 5]], [5, 5], 1);
+                    verifyBombCell([[6, 6]], [5, 5], 1);
+                }
+            );
+
+            it('should return 2 when exactly 2 adjacent cells' +
+                'conatin a bomb', 
+                function() {
+                    verifyBombCell([[4, 4], [6, 6]], [5, 5], 2);
+                    verifyBombCell([[4, 5], [5, 4]], [5, 5], 2);
+                    verifyBombCell([[4, 6], [6, 4]], [5, 5], 2);
+                }
+            );
+
+            it('should return 3 when exactly 3 adjacent cells' +
+                'conatin a bomb', 
+                function() {
+                    verifyBombCell([[4, 4], [5, 4], [6, 6]], [5, 5], 3);
+                    verifyBombCell([[4, 5], [5, 4], [6, 5]], [5, 5], 3);
+                    verifyBombCell([[4, 4], [4, 6], [6, 4]], [5, 5], 3);
+                }
+            );
+
+            it('should return 4 when exactly 4 adjacent cells' +
+                'conatin a bomb', 
+                function() {
+                    verifyBombCell([[4, 4], [4, 5], [5, 4], [6, 6]], 
+                        [5, 5], 4);
+                    verifyBombCell([[4, 5], [5, 4], [6, 4], [6, 5]], 
+                        [5, 5], 4);
+                    verifyBombCell([[4, 4], [4, 6], [5, 6], [6, 4]], 
+                        [5, 5], 4);
+                }
+            );
+
+            it('should return 8 when all 8 adjacent cells' +
+                'conatin a bomb', 
+                function() {
+                    verifyBombCell([
+                        [4, 4], [4, 5], [4, 6],
+                        [5, 4], [5, 6],
+                        [6, 4], [6, 5], [6, 6]],
+                        [5, 5], 8);
+                }
+            );
+        });
     });
 });

@@ -24,10 +24,8 @@ require( [
     ], function(angular, app) {
         'use strict';
         
-        var $html = angular.element(document.getElementByTagName('html')[0]);
-
-        angular.element().ready(function () {
-            angular.resumeBootstrap([app['name']]);
+        angular.element(document).ready(function() {
+            app.init();
         });
     }
 );

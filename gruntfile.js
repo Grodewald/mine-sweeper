@@ -10,15 +10,15 @@ module.exports = function (grunt){
         copy: {
             debug: {
                 files: [
-                    { expand: true, src: ['src/js/*.js'], 
+                    { expand: true, src: ['src/*.js'], 
                     dest: 'build/debug/js', flatten: true },
 
-                    { expand: true, src: ['src/js/mine_sweeper_board/*.js'],
+                    { expand: true, src: ['src/mine_sweeper_board/*.js'],
                     dest: 'build/debug/js/mine_sweeper_board', flatten: true},
 
                     { expand: true, src: ['lib/**/*'], dest: 'build/debug/js/'},
 
-                    { expand: true, src: ['src/html/*'], dest: 'build/debug/', 
+                    { expand: true, src: ['src/*.html'], dest: 'build/debug/', 
                     filter: 'isFile', flatten:true },
 
                 ]
@@ -49,7 +49,7 @@ module.exports = function (grunt){
                 jshintrc: true,
                 reporter: require('jshint-stylish')
             },
-            all: ['src/js/**/*.js', 'test/js/**/*.js']
+            all: ['src/**/*.js', 'test/**/*.js']
         },
 
         karma: {
@@ -66,7 +66,7 @@ module.exports = function (grunt){
 
         watch: {
             scripts: {
-                files: ['test/js/**/*.js', 'src/js/**/*.js', 'src/html/**/*.html'],
+                files: ['test/**/*.js', 'src/**/*.js', 'src/**/*.html'],
                 tasks: ['clean:debug', 'jshint:all', 'karma:watch', 'copy:debug']
             }
         }

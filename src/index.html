@@ -5,6 +5,9 @@
         <link rel="stylesheet" href="css/mineSweeperBoard.css" />
     </head>
     <body>
+        <div ng-controller='gameController'>
+            <div ng-include='templateUri'></div>
+        </div>
         <div ng-controller='mineSweeperBoardController'>
             <div ng-include='templateUri'></div>
         </div>

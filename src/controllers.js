@@ -10,5 +10,15 @@ define(['angular'], function (angular) {
                     }
                 );
             }]
+        )
+        .controller('gameController', ['$scope', '$injector', '$rootScope', 
+            function ($scope, $injector, $rootScope) {
+                require(['mine_sweeper_game/gameController'],
+                    function (ctrl) {
+                        $injector.invoke(ctrl, this, { '$scope' : $scope,
+                        '$rootScope' : $rootScope});
+                    }
+                );
+            }]
         );
 });

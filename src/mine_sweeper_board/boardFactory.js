@@ -18,6 +18,11 @@ define([], (function() {
                 return width + (height * boardWidth);
             };
 
+            if (width >= boardWidth || height >= boardHeight ||
+                height < 0 || width < 0) {
+                return 0;
+            }
+
             if (bombArray.indexOf(translateToBombValue(width,height)) !== -1) {
                 return -1;
             }

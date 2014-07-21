@@ -178,6 +178,10 @@ define(['mine_sweeper_board/boardFactory'], function (boardFactory) {
                         [5, 5], 8);
                 }
             );
+
+            it('should not count wrapped adjacent cells', function() {
+                verifyBombCell([[0,0], [0,1], [0,2]], [9,0], 0 );
+            });
         });
     });
 });

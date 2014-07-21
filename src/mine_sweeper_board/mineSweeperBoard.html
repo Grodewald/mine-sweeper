@@ -1,1 +1,9 @@
 <h1>{{title}}</h1>
+<h2> {{ boardInfo }} </h2>
+<table>
+    <tr ng-repeat="row in board track by $index">
+        <td ng-repeat="cell in row">
+            {{ cell.bomb }}
+        </td>
+    </tr>
+</table>

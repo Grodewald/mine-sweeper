@@ -7,6 +7,43 @@ module.exports = function (grunt){
             }
         },
 
+        copy: {
+            debug: {
+                files: [
+                    { expand: true, src: ['src/js/*.js'], 
+                    dest: 'build/debug/js', flatten: true },
+
+                    { expand: true, src: ['src/js/mine_sweeper_board/*.js'],
+                    dest: 'build/debug/js/mine_sweeper_board', flatten: true},
+
+                    { expand: true, src: ['lib/**/*'], dest: 'build/debug/js/'},
+
+                    { expand: true, src: ['src/html/*'], dest: 'build/debug/', 
+                    filter: 'isFile', flatten:true },
+
+                ]
+            }
+        },
+
+        clean: {
+            debug: ['build/debug']
+        },
+
+        'http-server' : {
+            'debug': {
+                root: 'build/debug',
+                port: '8085',
+                host: '127.0.0.1',
+                cache: 0,
+                showDir: true,
+                autoIndex: true,
+                defaultExt: 'html',
+                runInBackground: true
+
+            }
+
+        },
+
         jshint: {
             options: {
                 jshintrc: true,
@@ -29,19 +66,24 @@ module.exports = function (grunt){
 
         watch: {
             scripts: {
-                files: ['test/js/**/*.js', 'src/js/**/*.js'],
-                tasks: ['jshint:all', 'karma:watch']
+                files: ['test/js/**/*.js', 'src/js/**/*.js', 'src/html/**/*.html'],
+                tasks: ['clean:debug', 'jshint:all', 'karma:watch', 'copy:debug']
             }
         }
     });
 
     grunt.loadNpmTasks('grunt-bower-task');
+    grunt.loadNpmTasks('grunt-contrib-copy');
+    grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-jshint');
-    grunt.loadNpmTasks('grunt-karma');
     grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.loadNpmTasks('grunt-http-server');
+    grunt.loadNpmTasks('grunt-karma');
+    
 
     grunt.registerTask('build:debug', 'Resolve dependencies, lint, unit test', [
-        'bower:install', 'jshint:all', 'karma:watch']);
+        'clean:debug', 'bower:install', 'jshint:all', 'karma:watch', 'copy:debug',
+        'http-server:debug']);
 
     grunt.registerTask('dev', 'Debug build, then watch for changes, lint, and unit test',
         ['build:debug', 'watch'])

@@ -12,6 +12,6 @@ define([], function() {
         $scope.selectGame = function () { return selectGame(easyGame); };
         $scope.title = 'Select Game';
         $scope.templateUri = 'views/gameController.html';
-        $scope.apply();
+        $scope.$apply();
     }];
 });

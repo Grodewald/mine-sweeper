@@ -17,7 +17,7 @@ define(['mine_sweeper_game/gameController'], function (ctrl) {
             applyWasCalled = false;
             brodcastArgs = {};
             scope = {
-                apply : function () { applyWasCalled = true; },
+                $apply : function () { applyWasCalled = true; },
                 $on : function() {} 
             };
             rootScope = {

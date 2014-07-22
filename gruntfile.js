@@ -31,6 +31,15 @@ module.exports = function (grunt){
                     { expand: true, src: ['src/mine_sweeper_game/*.css'],
                     dest: 'build/debug/css', flatten: true},
 
+                    { expand: true, src: ['src/timer/*.js'],
+                    dest: 'build/debug/js/timer', flatten: true},
+
+                    { expand: true, src: ['src/timer/*.html'],
+                    dest: 'build/debug/views', flatten: true},
+
+                    { expand: true, src: ['src/timer/*.css'],
+                    dest: 'build/debug/css', flatten: true},
+
                     { expand: true, src: ['lib/**/*'], dest: 'build/debug/js/'},
 
                     { expand: true, src: ['src/*.html'], dest: 'build/debug/', 

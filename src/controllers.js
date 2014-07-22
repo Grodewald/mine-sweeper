@@ -11,6 +11,17 @@ define(['angular'], function (angular) {
                 );
             }]
         )
+        .controller('timingController', ['$scope', '$injector', '$rootScope',
+            '$timeout', 
+            function ($scope, $injector, $rootScope, $timeout) {
+                require(['timer/timingController'],
+                    function (ctrl) {
+                        $injector.invoke(ctrl, this, {'$scope' : $scope,
+                        '$rootScope' : $rootScope, '$timeout' : $timeout});
+                    }
+                );
+            }]
+        )
         .controller('gameController', ['$scope', '$injector', '$rootScope', 
             function ($scope, $injector, $rootScope) {
                 require(['mine_sweeper_game/gameController'],

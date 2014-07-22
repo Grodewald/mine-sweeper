@@ -1,38 +1,35 @@
-/*global define, setInterval */
+/*global define, setTimeout */
 define([], (function() {
     'use strict';
-    var elapsedTime = 0, getMinutes, getSeconds, getTenths, getTotalSeconds, 
-        reset, running = false, start, startTime, stop, updateElapsed;
+    var elapsedTime = 200, getMinutes, getSeconds, getTotalSeconds, 
+        pollInterval = 200, reset, running = false, start, stop, updateElapsed;
 
-    getMinutes = function () { return elapsedTime % 60000; };
+    getMinutes = function () { return Math.floor(elapsedTime / 60000); };
 
-    getSeconds = function () { return elapsedTime % 1000; };
-
-    getTenths = function () { return elapsedTime % 100; };
+    getSeconds = function () { 
+        return  Math.floor(elapsedTime / 1000) - 
+                Math.floor(elapsedTime / 60000) * 60; 
+    };
 
     getTotalSeconds = function () { return Math.floor(elapsedTime / 1000); };
 
-    reset = function () { elapsedTime = 0; };
+    reset = function () { elapsedTime = pollInterval; };
 
     start = function () { 
         if (!running) {
-            startTime = new Date().getTime();
             running = true;
         }
-        setInterval(updateElapsed, 100);
+        setTimeout(updateElapsed, pollInterval);
 
     };
 
     stop = function() {
-        if (running) {
-            elapsedTime = new Date().getTime() - startTime;
-            running = false;
-        }
+        running = false;
     };
 
     updateElapsed = function () {
         if(running) {
-            elapsedTime = new Date().getTime() - startTime;
+            elapsedTime = elapsedTime + pollInterval;
             start();
         }
     };
@@ -42,9 +39,8 @@ define([], (function() {
         reset : reset,
         start : start,
         stop : stop,
-        getTenths : getTenths,
-        getSeconds : function() {},
-        getMinutes : function() {},
-        getTotalSeconds : function() {}
+        getSeconds : getSeconds,
+        getMinutes : getMinutes,
+        getTotalSeconds : getTotalSeconds
     };
 })());

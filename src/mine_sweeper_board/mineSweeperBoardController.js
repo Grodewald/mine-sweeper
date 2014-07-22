@@ -1,11 +1,11 @@
 /*global define */
 define(['mine_sweeper_board/boardFactory',
-    'mine_sweeper_board/bombFactory'],
-    function(boardFactory, bombFactory) {
+    'mine_sweeper_board/bombFactory', 'globalEvents'],
+    function(boardFactory, bombFactory, globalEvents) {
         'use strict';
 
         var bombs, board, cellCreator, checkBoundry,
-            gameMatrix, sweepCell, sweepNeighbors,
+            gameMatrix, initGame, sweepCell, sweepNeighbors,
             transformBombText;
 
         
@@ -29,6 +29,12 @@ define(['mine_sweeper_board/boardFactory',
         checkBoundry = function (width,height) {
             return (width >= 0 && width < board.width &&
                 height >= 0 && height < board.height);            
+        };
+
+        initGame = function(width, height, bombCount) {
+            bombs = bombFactory.create(width, height, bombCount);
+            board = boardFactory.create(width, height, bombs);
+            gameMatrix = cellCreator(board);
         };
 
         transformBombText = function(number) {
@@ -83,17 +89,26 @@ define(['mine_sweeper_board/boardFactory',
 
         };
 
-        bombs = bombFactory.create(6,6,3);
-        board = boardFactory.create(6,6,bombs);
-        gameMatrix = cellCreator(board);
+        
 
         return ['$scope', function($scope) {
-
-            $scope.boardInfo = board.width + ' x ' + board.height + 
+            var initScope = function(title) {
+                $scope.board = gameMatrix;
+                $scope.title = title;
+                $scope.boardInfo = board.width + ' x ' + board.height + 
                 ' bombs: ' + board.bombCount;
-            $scope.board = gameMatrix;
+
+            };
+
+            initGame(10,10,8);
+            initScope('Default Game');
+            $scope.$on(globalEvents.gameEvents.gameRequested, 
+                function (event, data) { 
+                    initGame (data.width, data.height, data.bombs); 
+                    initScope(data.name);                  
+                }
+            );
             $scope.templateUri = 'views/mineSweeperBoard.html';
-            $scope.title = 'Mine Sweeper Board';
             $scope.sweepCell = sweepCell;
             $scope.$apply();
         }];

@@ -1,4 +1,4 @@
-/*global define, alert*/
+/*global define*/
 define([], function() {
     'use strict';
     return ['$scope', '$rootScope', function($scope, $rootScope) {
@@ -11,7 +11,6 @@ define([], function() {
 
         $scope.selectGame = function () { return selectGame(easyGame); };
         $scope.title = 'Select Game';
-        $scope.$on('gameRequested', function () { alert('gemrRequested'); });
         $scope.templateUri = 'views/gameController.html';
         $scope.apply();
     }];

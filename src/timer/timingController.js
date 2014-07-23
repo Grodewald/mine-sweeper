@@ -12,6 +12,8 @@ define(['timer/timer', 'globalEvents', 'timer/timerEvents'],
                 timelimit = -1;
                 if (data && data.timelimit) {
                     timelimit = data.timelimit;
+                    timer.startCountDown(timelimit);
+                    timer.stop();
                 }
                 timer.stop();
             };
@@ -36,7 +38,8 @@ define(['timer/timer', 'globalEvents', 'timer/timerEvents'],
             };
 
             $scope.onTimeout = function () {
-                $scope.seconds = timer.getSeconds();
+                $scope.seconds = timer.getSeconds() < 10 ?  
+                   '0' + timer.getSeconds() : timer.getSeconds();
                 $scope.minutes = timer.getMinutes();
                 $timeout($scope.onTimeout, 200);
             };

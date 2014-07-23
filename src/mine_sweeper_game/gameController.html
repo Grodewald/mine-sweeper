@@ -1,3 +1,7 @@
 <h1>{{ message }}</h1>
 <div>{{ title }}</div>
-<div> <button ng-click="selectGame()"></button></div>
+<div> 
+    <select ng-model="selectedGame" ng-options="game.name for game in games"></select> 
+    Description {{ selectedGame.description }}
+    <button ng-click="selectGame(selectedGame)"> Play ! </button>
+</div>

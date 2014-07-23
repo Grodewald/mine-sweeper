@@ -4,16 +4,17 @@ define(['timer/timer', 'globalEvents'], function(timer, events) {
     
     return ['$scope', '$rootScope', '$timeout', 
         function($scope, $rootScope, $timeout) {
-            var handleGameCompleted, handleGameRequested, updateClock;
+            var handleGameCompleted, handleFirstCellSwept, updateClock;
 
-            handleGameRequested = function () {
+            handleFirstCellSwept = function () {
                 timer.stop();
                 timer.reset();
                 timer.start();
             };
 
             handleGameCompleted = function () {
-                $rootScope.$broadcast('');
+                //$rootScope.$broadcast('');
+                timer.stop();
             };
             $scope.onTimeout = function () {
                 $scope.seconds = timer.getSeconds();
@@ -24,7 +25,10 @@ define(['timer/timer', 'globalEvents'], function(timer, events) {
             updateClock = $timeout($scope.onTimeout, 200);
 
             $scope.templateUri = 'views/timing.html';
-            $scope.$on(events.gameEvents.gameRequested, handleGameRequested);
+            $scope.$on(events.boardEvents.firstCellSwept, 
+                handleFirstCellSwept);
+            $scope.$on(events.gameEvents.gameWon, handleGameCompleted);
+            $scope.$on(events.gameEvents.gameLost, handleGameCompleted);
             $scope.$apply();
         }
     ];

@@ -2,7 +2,9 @@
 define([], function() {
     'use strict';
     return {
-        gameRequested : 'gameRequested'
+        gameRequested : 'gameRequested',
+        gameWon : 'gameWon',
+        gameLost : 'gameLost'
     };
 
 });

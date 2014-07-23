@@ -1,14 +1,25 @@
 /*global define*/
-define([], function() {
+define(['mine_sweeper_game/gameEvents', 'globalEvents'], 
+    function(gameEvents, globalEvents) {
+
     'use strict';
     return ['$scope', '$rootScope', function($scope, $rootScope) {
-        var easyGame, selectGame;
+        var easyGame, handleLastCellSwept, handleBombSwept, selectGame;
 
         easyGame = { name: 'EasyGame', width : 6, height : 6, bombs : 5 };
-        selectGame = function (game) {
-            $rootScope.$broadcast('gameRequested', game);
+
+        handleBombSwept = function() {
+            $rootScope.$broadcast(gameEvents.gameLost);
         };
 
+        handleLastCellSwept = function () {
+            $rootScope.$broadcast(gameEvents.gameWon);
+        };
+
+        selectGame = function (game) {
+            $rootScope.$broadcast(gameEvents.gameRequested, game);
+        };
+        $scope.$on(globalEvents.boardEvents.lastCellSwept, handleLastCellSwept);
         $scope.selectGame = function () { return selectGame(easyGame); };
         $scope.title = 'Select Game';
         $scope.templateUri = 'views/gameController.html';

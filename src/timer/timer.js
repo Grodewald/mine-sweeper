@@ -18,8 +18,9 @@ define([], (function() {
     start = function () { 
         if (!running) {
             running = true;
+            setTimeout(updateElapsed, pollInterval);
         }
-        setTimeout(updateElapsed, pollInterval);
+        
 
     };
 

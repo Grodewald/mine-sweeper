@@ -1,5 +1,6 @@
 /*global define, beforeEach, it, expect, describe */
-define(['mine_sweeper_game/gameController'], function (ctrl) {
+define(['mine_sweeper_game/gameController', 'globalEvents'], 
+    function (ctrl, globalEvents) {
     'use strict';
     describe('gameController tests', function() {
         var applyWasCalled = false, broadcast, brodcastArgs, 
@@ -33,7 +34,8 @@ define(['mine_sweeper_game/gameController'], function (ctrl) {
         it('scope.selectGame() should broadcast the "gameRequested" event', 
             function () {
                 scope.selectGame();
-                expect(brodcastArgs.eventName).toBe('gameRequested');
+                expect(brodcastArgs.eventName)
+                    .toBe(globalEvents.gameEvents.gameRequested);
 
             }  
         );

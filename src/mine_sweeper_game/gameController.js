@@ -5,7 +5,7 @@ define(['mine_sweeper_game/gameEvents', 'globalEvents'],
     'use strict';
     return ['$scope', '$rootScope', function($scope, $rootScope) {
         var games, handleLastCellSwept, handleBombSwept, 
-            selectGame;
+            selectGame, handleTimeExpired;
 
         games = [
             {   name : "Easy Game", width : 6, height : 6, bombs : 5,
@@ -48,6 +48,11 @@ define(['mine_sweeper_game/gameEvents', 'globalEvents'],
             $rootScope.$broadcast(gameEvents.gameWon);
         };
 
+        handleTimeExpired = function () {
+            $scope.message = "Time is up! You Lose!";
+            $rootScope.$broadcast(gameEvents.gameLost);
+        };
+
         selectGame = function (game) {
             if (game.lives) {
                 $scope.lives = game.lives;
@@ -55,12 +60,14 @@ define(['mine_sweeper_game/gameEvents', 'globalEvents'],
             else {
                 $scope.lives = 1;
             }
+            $scope.message = '';
             $rootScope.$broadcast(gameEvents.gameRequested, 
                 game);
         };
 
         $scope.games = games;
         $scope.selectedGame = $scope.games[2];
+        $scope.$on(globalEvents.timerEvents.timeExpired, handleTimeExpired);
         $scope.$on(globalEvents.boardEvents.lastCellSwept, handleLastCellSwept);
         $scope.$on(globalEvents.boardEvents.bombSwept, handleBombSwept);
         $scope.selectGame = selectGame;

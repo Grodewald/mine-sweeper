@@ -1,8 +1,9 @@
-/*global define, setTimeout */
+/*global define, setTimeout*/
 define([], (function() {
     'use strict';
-    var elapsedTime = 200, getMinutes, getSeconds, getTotalSeconds, 
-        pollInterval = 200, reset, running = false, start, stop, updateElapsed;
+    var countdown = false, elapsedTime = 200, getMinutes, getSeconds,  
+        getTotalSeconds, pollInterval = 200, reset, running = false, 
+        start, startCountDown, stop, timeExpiredCallback, updateElapsed;
 
     getMinutes = function () { return Math.floor(elapsedTime / 60000); };
 
@@ -13,11 +14,23 @@ define([], (function() {
 
     getTotalSeconds = function () { return Math.floor(elapsedTime / 1000); };
 
-    reset = function () { elapsedTime = pollInterval; };
+    reset = function () { 
+        elapsedTime = pollInterval; 
+        countdown = false;
+    };
 
     start = function () { 
         if (!running) {
             running = true;
+            setTimeout(updateElapsed, pollInterval);
+        }
+    };
+
+    startCountDown = function (seconds) {
+        if (!running) {
+            running = true;
+            countdown = true;
+            elapsedTime = seconds * 1000;
             setTimeout(updateElapsed, pollInterval);
         }
     };
@@ -28,8 +41,22 @@ define([], (function() {
 
     updateElapsed = function () {
         if(running) {
-            elapsedTime = elapsedTime + pollInterval;
-            setTimeout(updateElapsed, pollInterval);
+            if (countdown) {
+                elapsedTime = elapsedTime - pollInterval;
+                if (elapsedTime > 0) {
+                    setTimeout(updateElapsed, pollInterval);
+                }
+                else {
+                    if (timeExpiredCallback && 
+                        typeof timeExpiredCallback === 
+                        'function') {
+                        timeExpiredCallback();
+                    }
+                }
+            } else {
+                elapsedTime = elapsedTime + pollInterval;
+                setTimeout(updateElapsed, pollInterval);
+            }
         }
     };
 
@@ -37,9 +64,13 @@ define([], (function() {
     return {
         reset : reset,
         start : start,
+        startCountDown : startCountDown,
         stop : stop,
         getSeconds : getSeconds,
         getMinutes : getMinutes,
-        getTotalSeconds : getTotalSeconds
+        getTotalSeconds : getTotalSeconds,
+        setTimeExpiredCallback : function (callback) {
+            timeExpiredCallback = callback;
+        }
     };
 })());

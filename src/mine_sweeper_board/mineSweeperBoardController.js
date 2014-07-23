@@ -6,8 +6,8 @@ define(['mine_sweeper_board/boardFactory',
         'use strict';
 
         return ['$scope', '$rootScope', function($scope, $rootScope) {
-            var bombs, board, cellCreator, checkBoundry, cellsToSweep, 
-                firstCellSwept = false, gameMatrix, initGame, 
+            var bombs, board, cellCreator, checkBoundry, 
+                firstCellSwept = false, gameMatrix, initGame, gameInProgress, 
                 initScope, sweepCell, sweepNeighbors, transformBombText;
 
             cellCreator = function (board) {
@@ -33,10 +33,11 @@ define(['mine_sweeper_board/boardFactory',
             };
 
             initGame = function(width, height, bombCount) {
-                cellsToSweep = (width * height) - bombCount;
+                $scope.cellsToSweep = (width * height) - bombCount;
                 bombs = bombFactory.create(width, height, bombCount);
                 board = boardFactory.create(width, height, bombs);
                 gameMatrix = cellCreator(board);
+                gameInProgress = true;
             };
 
             initScope = function(title) {
@@ -74,13 +75,13 @@ define(['mine_sweeper_board/boardFactory',
                 }
                 if (cell.bomb === 'X') {
                     $rootScope.$broadcast(boardEvents.bombSwept, []);
+                    return;
                 }
-                else {
-                    cellsToSweep = cellsToSweep - 1;
-                    if (cellsToSweep === 0) {
-                        $rootScope.$broadcast(boardEvents.lastCellSwept, []);
-                    }
+                $scope.cellsToSweep = $scope.cellsToSweep - 1;
+                if ($scope.cellsToSweep === 0) {
+                    $rootScope.$broadcast(boardEvents.lastCellSwept, []);
                 }
+                
             };
 
             sweepNeighbors = function (cell) {
@@ -121,6 +122,12 @@ define(['mine_sweeper_board/boardFactory',
                     initScope(data.name);                  
                 }
             );
+            $scope.$on(globalEvents.gameEvents.gameLost, function() {
+                gameInProgress = false;
+            });
+            $scope.$on(globalEvents.gameEvents.gameWon, function() {
+                gameInProgress = false;
+            });
             $scope.templateUri = 'views/mineSweeperBoard.html';
             $scope.sweepCell = sweepCell;
             

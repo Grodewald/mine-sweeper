@@ -9,10 +9,12 @@ define(['mine_sweeper_game/gameEvents', 'globalEvents'],
         easyGame = { name: 'EasyGame', width : 6, height : 6, bombs : 5 };
 
         handleBombSwept = function() {
+            $scope.message = "You Lose!";
             $rootScope.$broadcast(gameEvents.gameLost);
         };
 
         handleLastCellSwept = function () {
+            $scope.message = "You Win!";
             $rootScope.$broadcast(gameEvents.gameWon);
         };
 
@@ -24,6 +26,7 @@ define(['mine_sweeper_game/gameEvents', 'globalEvents'],
         $scope.selectGame = function () { return selectGame(easyGame); };
         $scope.title = 'Select Game';
         $scope.templateUri = 'views/gameController.html';
+
         $scope.$apply();
     }];
 });

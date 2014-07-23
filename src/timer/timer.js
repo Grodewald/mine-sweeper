@@ -29,7 +29,7 @@ define([], (function() {
     updateElapsed = function () {
         if(running) {
             elapsedTime = elapsedTime + pollInterval;
-            start();
+            setTimeout(updateElapsed, pollInterval);
         }
     };
 

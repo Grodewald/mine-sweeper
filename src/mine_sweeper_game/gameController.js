@@ -20,6 +20,7 @@ define(['mine_sweeper_game/gameEvents', 'globalEvents'],
             $rootScope.$broadcast(gameEvents.gameRequested, game);
         };
         $scope.$on(globalEvents.boardEvents.lastCellSwept, handleLastCellSwept);
+        $scope.$on(globalEvents.boardEvents.bombSwept, handleBombSwept);
         $scope.selectGame = function () { return selectGame(easyGame); };
         $scope.title = 'Select Game';
         $scope.templateUri = 'views/gameController.html';

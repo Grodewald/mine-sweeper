@@ -4,7 +4,12 @@ define(['timer/timer', 'globalEvents'], function(timer, events) {
     
     return ['$scope', '$rootScope', '$timeout', 
         function($scope, $rootScope, $timeout) {
-            var handleGameCompleted, handleFirstCellSwept, updateClock;
+            var handleGameRequested, handleGameCompleted, 
+                handleFirstCellSwept, updateClock;
+
+            handleGameRequested = function () {
+                timer.stop();
+            };
 
             handleFirstCellSwept = function () {
                 timer.stop();
@@ -29,6 +34,7 @@ define(['timer/timer', 'globalEvents'], function(timer, events) {
                 handleFirstCellSwept);
             $scope.$on(events.gameEvents.gameWon, handleGameCompleted);
             $scope.$on(events.gameEvents.gameLost, handleGameCompleted);
+            $scope.$on(events.gameEvents.gameRequested, handleGameRequested);
             $scope.$apply();
         }
     ];

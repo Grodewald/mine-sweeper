@@ -36,8 +36,11 @@ define(['mine_sweeper_game/gameEvents', 'globalEvents'],
         ];
 
         handleBombSwept = function() {
-            $scope.message = "You Lose!";
-            $rootScope.$broadcast(gameEvents.gameLost);
+            $scope.lives = $scope.lives - 1;
+            if ($scope.lives === 0) {
+                $scope.message = "You Lose!";
+                $rootScope.$broadcast(gameEvents.gameLost);
+            }
         };
 
         handleLastCellSwept = function () {
@@ -46,6 +49,12 @@ define(['mine_sweeper_game/gameEvents', 'globalEvents'],
         };
 
         selectGame = function (game) {
+            if (game.lives) {
+                $scope.lives = game.lives;
+            }
+            else {
+                $scope.lives = 1;
+            }
             $rootScope.$broadcast(gameEvents.gameRequested, 
                 game);
         };

@@ -33,7 +33,7 @@ define(['mine_sweeper_game/gameController', 'globalEvents'],
         });
         it('scope.selectGame() should broadcast the "gameRequested" event', 
             function () {
-                scope.selectGame();
+                scope.selectGame({});
                 expect(brodcastArgs.eventName)
                     .toBe(globalEvents.gameEvents.gameRequested);
 

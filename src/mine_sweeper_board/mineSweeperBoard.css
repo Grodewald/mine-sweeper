@@ -4,7 +4,6 @@
     height: 30px;
     margin: 0px;
     text-align: center;
-    border-color: #FFFF00;
     border-width: 3px;
 }
 
@@ -14,6 +13,23 @@
     height: 30px;
     margin: 0px;
     text-align: center; 
-    border-color: #FFFF00;
+    border-width: 3px;
+}
+
+.flagged {
+    background-color: #DC143C;
+    width: 30px;
+    height: 30px;
+    margin: 0px;
+    text-align: center; 
+    border-width: 3px;
+}
+
+.question {
+    background-color: #FFFF00;
+    width: 30px;
+    height: 30px;
+    margin: 0px;
+    text-align: center; 
     border-width: 3px;
 }

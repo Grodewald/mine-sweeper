@@ -6,9 +6,9 @@ define(['mine_sweeper_board/boardFactory',
         'use strict';
 
         return ['$scope', '$rootScope', function($scope, $rootScope) {
-            var bombs, board, cellCreator, checkBoundry, 
-                firstCellSwept = false, gameMatrix, initGame, gameInProgress, 
-                initScope, sweepCell, sweepNeighbors, transformBombText;
+            var bombs, board, cellCreator, checkBoundry, firstCellSwept = false,
+                flagCell, gameMatrix, initGame, gameInProgress, 
+                initScope, sweepCell, sweepNeighbors;
 
             cellCreator = function (board) {
                 var cellRows = new Array(board.height);
@@ -18,7 +18,7 @@ define(['mine_sweeper_board/boardFactory',
                         cellRows[i][j] = { 
                             x : j, 
                             y : i, 
-                            bomb : transformBombText(board.checkCell(j,i)),
+                            bomb : board.checkCell(j,i),
                             style : 'unswept',
                             hasBeenSwept : false
                         };
@@ -30,6 +30,18 @@ define(['mine_sweeper_board/boardFactory',
             checkBoundry = function (width,height) {
                 return (width >= 0 && width < board.width &&
                     height >= 0 && height < board.height);            
+            };
+
+            flagCell = function(cell) {
+                if (!cell.hasBeenSwept) {
+                    if (cell.style === 'flagged') {
+                        cell.style = 'question';
+                    } else if (cell.style === 'question') {
+                        cell.style = 'unswept';
+                    } else if (cell.style === 'unswept') {
+                        cell.style = 'flagged';
+                    }
+                }
             };
 
             initGame = function(width, height, bombCount) {
@@ -48,17 +60,6 @@ define(['mine_sweeper_board/boardFactory',
                 firstCellSwept = false;
 
             };
-
-            transformBombText = function(number) {
-                if (number === 0) {
-                    return ' ';
-                }
-                if (number === -1) {
-                    return 'X';
-                }
-                return number;
-            };
-
             
             sweepCell = function (cell) {
                 if(cell.hasBeenSwept || !gameInProgress) {
@@ -66,14 +67,21 @@ define(['mine_sweeper_board/boardFactory',
                 }
                 cell.style = 'swept';
                 cell.hasBeenSwept = true;
-                if (cell.bomb === ' ') {
+                cell.displayText = cell.bomb;
+                if (cell.displayText === -1) {
+                    cell.displayText = 'X';
+                }
+                if (cell.displayText === 0) {
+                    cell.displayText = ' ';
+                }
+                if (cell.bomb === 0) {
                     sweepNeighbors(cell);
                 }
                 if (! firstCellSwept) {
                     firstCellSwept = true;
                     $rootScope.$broadcast(boardEvents.firstCellSwept, []);
                 }
-                if (cell.bomb === 'X') {
+                if (cell.bomb === -1) {
                     $rootScope.$broadcast(boardEvents.bombSwept, []);
                     return;
                 }
@@ -128,6 +136,7 @@ define(['mine_sweeper_board/boardFactory',
             });
             $scope.templateUri = 'views/mineSweeperBoard.html';
             $scope.sweepCell = sweepCell;
+            $scope.flagCell = flagCell;
             
             $scope.$apply();
         }];

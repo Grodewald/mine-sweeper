@@ -61,7 +61,7 @@ define(['mine_sweeper_board/boardFactory',
 
             
             sweepCell = function (cell) {
-                if(cell.hasBeenSwept) {
+                if(cell.hasBeenSwept || !gameInProgress) {
                     return;
                 }
                 cell.style = 'swept';
@@ -114,8 +114,6 @@ define(['mine_sweeper_board/boardFactory',
 
             };
 
-            initGame(10,10,8);
-            initScope('Default Game');
             $scope.$on(globalEvents.gameEvents.gameRequested, 
                 function (event, data) { 
                     initGame (data.width, data.height, data.bombs); 

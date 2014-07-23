@@ -20,8 +20,6 @@ define([], (function() {
             running = true;
             setTimeout(updateElapsed, pollInterval);
         }
-        
-
     };
 
     stop = function() {

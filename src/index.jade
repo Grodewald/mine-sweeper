@@ -1,0 +1,13 @@
+doctype html
+html(lang="en")
+  head
+    title Mine Sweeper
+    link(rel="stylesheet" href="css/mineSweeperBoard.css")
+  body
+    div(ng-controller="mineSweeperBoardController")
+      div(ng-include="templateUri")
+    div(style="float:left" ng-controller="gameController")
+      div(ng-include="templateUri")
+    div(style="float:left" ng-controller="timingController")
+      div(ng-include="templateUri")
+    script(data-main="js/main" src="js/lib/requirejs/require.js")

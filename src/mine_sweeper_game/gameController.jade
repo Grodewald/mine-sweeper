@@ -1,0 +1,7 @@
+h1 {{ message }}
+div {{ title }}
+div 
+  select(ng-model="selectedGame" ng-options="game.name for game in games") 
+  h3 Description {{ selectedGame.description }}
+  button(ng-click="selectGame(selectedGame)") Play !
+h2Lives Remaining : {{ lives }}

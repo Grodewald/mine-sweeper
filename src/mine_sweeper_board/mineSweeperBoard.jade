@@ -1,0 +1,7 @@
+h1 {{title}}
+h2 {{ boardInfo }} 
+h2 Remaining Cells to Sweep : {{ cellsToSweep }}
+table
+  tr(ng-repeat="row in board track by $index")
+    td(ng-repeat="cell in row")
+      div(ng-class="cell.style" ng-click="sweepCell(cell)" ng-right-click="flagCell(cell)") {{ cell.displayText }} 

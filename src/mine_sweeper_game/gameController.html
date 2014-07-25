@@ -1,8 +1,0 @@
-<h1>{{ message }}</h1>
-<div>{{ title }}</div>
-<div> 
-    <select ng-model="selectedGame" ng-options="game.name for game in games"></select> 
-    Description {{ selectedGame.description }}
-    <button ng-click="selectGame(selectedGame)"> Play ! </button>
-</div>
-<h2>Lives Remaining : {{ lives }}</h2>

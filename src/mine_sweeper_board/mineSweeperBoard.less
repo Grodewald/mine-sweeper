@@ -1,0 +1,27 @@
+.cellBase {
+    width: 30px;
+    height: 30px;
+    margin: 0px;
+    text-align: center;
+    border-width: 3px;
+}
+
+.unswept {
+    &:extend(.cellBase);
+    background-color: #000000;
+}
+
+.swept {
+    &:extend(.cellBase);
+    background-color: #B3B3B3;
+}
+
+.flagged {
+    &:extend(.cellBase);
+    background-color: #DC143C;
+}
+
+.question {
+    &:extend(.cellBase);
+    background-color: #FFFF00;
+}

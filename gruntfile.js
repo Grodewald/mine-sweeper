@@ -13,23 +13,17 @@ module.exports = function (grunt){
                     { expand: true, src: ['src/*.js'], 
                     dest: 'build/debug/js', flatten: true },
 
+                    { expand: true, src: ['src/*.css'], 
+                    dest: 'build/debug/css', flatten: true },
+
                     { expand: true, src: ['src/mine_sweeper_board/*.js'],
                     dest: 'build/debug/js/mine_sweeper_board', flatten: true},
-
-                    { expand: true, src: ['src/mine_sweeper_board/*.css'],
-                    dest: 'build/debug/css', flatten: true},
 
                     { expand: true, src: ['src/mine_sweeper_game/*.js'],
                     dest: 'build/debug/js/mine_sweeper_game', flatten: true},
 
-                    { expand: true, src: ['src/mine_sweeper_game/*.css'],
-                    dest: 'build/debug/css', flatten: true},
-
                     { expand: true, src: ['src/timer/*.js'],
                     dest: 'build/debug/js/timer', flatten: true},
-
-                    { expand: true, src: ['src/timer/*.css'],
-                    dest: 'build/debug/css', flatten: true},
 
                     { expand: true, src: ['lib/**/*'], dest: 'build/debug/js/'}
                 ]
@@ -37,7 +31,9 @@ module.exports = function (grunt){
         },
 
         clean: {
-            debug: ['build/debug']
+            debug: ['build/debug'],
+            release: ['build/release'],
+            dep: ['bower_components', 'lib', 'node_modules']
         },
 
         'http-server' : {
@@ -51,8 +47,7 @@ module.exports = function (grunt){
                 defaultExt: 'html',
                 runInBackground: true
 
-            }
-
+            },
         },
 
         jade: {
@@ -96,10 +91,22 @@ module.exports = function (grunt){
             }
         },
 
+        less: {
+            debug: {
+                files: [{
+                    expand: true,
+                    src: 'src/**/*.less',
+                    dest: 'build/debug/css',
+                    ext: '.css',
+                    flatten: true
+                }]
+            }
+        },
+
         watch: {
             scripts: {
-                files: ['test/**/*.js', 'src/**/*.js', 'src/**/*.jade'],
-                tasks: ['clean:debug', 'jshint:all', 'karma:watch', 'jade:debug', 'copy:debug']
+                files: ['test/**/*.js', 'src/**/*.js', 'src/**/*.jade', 'src/**/*.less'],
+                tasks: ['clean:debug', 'jshint:all', 'karma:watch', 'jade:debug', 'less:debug', 'copy:debug']
             }
         }
     });
@@ -109,6 +116,7 @@ module.exports = function (grunt){
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-jade');
     grunt.loadNpmTasks('grunt-contrib-jshint');
+    grunt.loadNpmTasks('grunt-contrib-less');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-http-server');
     grunt.loadNpmTasks('grunt-karma');
@@ -116,7 +124,7 @@ module.exports = function (grunt){
 
     grunt.registerTask('build:debug', 'Resolve dependencies, lint, unit test', [
         'clean:debug', 'bower:install', 'jshint:all', 'karma:watch', 'jade:debug', 
-        'copy:debug', 'http-server:debug']);
+        'less:debug', 'copy:debug', 'http-server:debug']);
 
     grunt.registerTask('dev', 'Debug build, then watch for changes, lint, and unit test',
         ['build:debug', 'watch'])

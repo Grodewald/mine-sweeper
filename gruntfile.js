@@ -32,22 +32,26 @@ module.exports = function (grunt){
 
         clean: {
             debug: ['build/debug'],
+            'debug-js': ['build/debug/js/**/*.js'],
             release: ['build/release'],
             dep: ['bower_components', 'lib', 'node_modules']
         },
 
-        'http-server' : {
-            'debug': {
-                root: 'build/debug',
-                port: '8085',
-                host: '127.0.0.1',
-                cache: 0,
-                showDir: true,
-                autoIndex: true,
-                defaultExt: 'html',
-                runInBackground: true
-
+        connect: {
+            options: {
+                port: 8085,
+                hostname: 'localhost',
+                base: 'build/debug',
+                livereload: 35729
             },
+            livereload: {
+                open: true,
+                middleware: function (connect) {
+                    return [
+                        connect.static('build/debug')
+                    ];
+                }
+            }
         },
 
         jade: {
@@ -105,27 +109,48 @@ module.exports = function (grunt){
 
         watch: {
             scripts: {
-                files: ['test/**/*.js', 'src/**/*.js', 'src/**/*.jade', 'src/**/*.less'],
-                tasks: ['clean:debug', 'jshint:all', 'karma:watch', 'jade:debug', 'less:debug', 'copy:debug']
+                files: ['test/**/*.js', 'src/**/*.js'],
+                tasks: ['clean:debug-js', 'jshint:all', 'karma:watch', 'jade:debug', 'less:debug', 'copy:debug']
+            }, 
+            jade: {
+                files: ['src/**/*.jade'],
+                tasks: ['jade:debug']
+            },
+            less: {
+                files: ['src/**/*.less'],
+                tasks: ['less:debug']
+            },
+            css: {
+                files: ['src/**/*.css'],
+                tasks: ['copy:debug']
+            },
+            livereload: {
+                options: {
+                    livereload: '<%= connect.options.livereload %>'
+                },
+                files: [
+                    'build/debug/**/*.html',
+                    'build/debug/css/*.css'
+                ] 
             }
         }
     });
 
     grunt.loadNpmTasks('grunt-bower-task');
+    grunt.loadNpmTasks('grunt-contrib-connect');
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-jade');
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-less');
     grunt.loadNpmTasks('grunt-contrib-watch');
-    grunt.loadNpmTasks('grunt-http-server');
     grunt.loadNpmTasks('grunt-karma');
     
 
     grunt.registerTask('build:debug', 'Resolve dependencies, lint, unit test', [
         'clean:debug', 'bower:install', 'jshint:all', 'karma:watch', 'jade:debug', 
-        'less:debug', 'copy:debug', 'http-server:debug']);
+        'less:debug', 'copy:debug', 'connect:livereload']);
 
     grunt.registerTask('dev', 'Debug build, then watch for changes, lint, and unit test',
-        ['build:debug', 'watch'])
+        ['build:debug', 'watch']);
 };

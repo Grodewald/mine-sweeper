@@ -1,1 +1,48 @@
 @import url('/css/mineSweeperBoard.css');
+
+
+#board {
+    margin: 0, auto;
+    padding: 20px 20px 20px 20px;
+    border-color: #000000;
+    border-width: 5px;
+    border-style: solid;
+    
+}
+
+#boardContainer {
+    position: relative;
+    background-color: #FA5858;
+    padding: 20px 20px 20px 20px;
+    border-color: #000000;
+    border-width: 5px;
+    border-style: solid;
+}
+
+#gameTimeContainer {
+    position: relative
+    top: 20px;
+    left: 20px;
+    background-color: #F2F5A9;
+    padding: 20px 20px 20px 20px;
+    border-color: #000000;
+    border-width: 5px;
+    border-style: solid;
+}
+
+#container {
+    background-color: #F5D0A9;
+    padding: 20px 20px 20px 20px;
+    border-color: #000000;
+    border-width: 5px;
+    border-style: solid;
+}
+
+#timing {
+    margin: 0, auto;
+    background-color: #045FB4;
+    padding: 20px 20px 20px 20px;
+    border-color: #000000;
+    border-width: 5px;
+    border-style: solid;
+}

@@ -1,0 +1,12 @@
+div(id="game-container")
+  div(id="game-messageContainer")
+    h1 {{ message }}
+  div(id="game-selectionContainer")
+    div(id="game-selector") 
+      select(ng-model="selectedGame" ng-options="game.name for game in games") 
+    div(id="game-description") 
+      p {{ selectedGame.description }}
+    div(id="game-playButton")
+      button(ng-click="selectGame(selectedGame)") Play !
+  div(id="game-livesContainer")
+    div(id="game-lives") Lives Remaining : {{ lives }}

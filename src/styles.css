@@ -1,7 +1,9 @@
 @import url('/css/mineSweeperBoard.css');
+@import url('/css/timing.css');
+@import url('/css/game.css');
 
 
-#board {
+#index-board {
     margin: 0, auto;
     padding: 20px 20px 20px 20px;
     border-color: #000000;
@@ -10,27 +12,12 @@
     
 }
 
-#boardContainer {
+#index-boardContainer {
     position: relative;
     background-color: #FA5858;
-    padding: 20px 20px 20px 20px;
-    border-color: #000000;
-    border-width: 5px;
-    border-style: solid;
 }
 
-#gameTimeContainer {
-    position: relative
-    top: 20px;
-    left: 20px;
-    background-color: #F2F5A9;
-    padding: 20px 20px 20px 20px;
-    border-color: #000000;
-    border-width: 5px;
-    border-style: solid;
-}
-
-#container {
+#index-container {
     background-color: #F5D0A9;
     padding: 20px 20px 20px 20px;
     border-color: #000000;
@@ -38,11 +25,22 @@
     border-style: solid;
 }
 
-#timing {
-    margin: 0, auto;
-    background-color: #045FB4;
-    padding: 20px 20px 20px 20px;
+#index-game {
+    background-color: #2EFE9A;
+}
+
+#index-gameTimeContainer {
+    position: relative;
     border-color: #000000;
     border-width: 5px;
     border-style: solid;
+}
+
+#index-timing {
+    position: absolute;
+    width: 150px;
+    height: 50px;
+    right: 0px;
+    top: 20%%;
+    background-color: #045FB4;
 }

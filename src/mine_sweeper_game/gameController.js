@@ -15,7 +15,7 @@ define(['mine_sweeper_game/gameEvents', 'globalEvents'],
                 description: "Traditional Game 8x11 with 10 bombs" },
 
             {   name : "Hard Game", width : 11, height : 14, bombs : 20,
-                description: "Traditional Game 11x14 with 5 bombs" },
+                description: "Traditional Game 11x14 with 20 bombs" },
 
             {   name : "1-Minute Drill", width : 6, height : 6, bombs : 5, 
                 timelimit : 60, 
@@ -29,9 +29,9 @@ define(['mine_sweeper_game/gameEvents', 'globalEvents'],
                 lives : 3,
                 description: "The hard game, but you have 3 lives" },
 
-            {   name : "5 Life Mega", width : 16, height : 16, bombs : 50,
-                timelimit: 180, lives : 5,
-                description: "3 minutes to do a 16x16 with 50 bombs," + 
+            {   name : "5 Life Mega", width : 20, height : 25, bombs : 50,
+                timelimit: 300, lives : 5,
+                description: "5 minutes to do a 20x25 with 50 bombs," + 
                 " but you have 5 lives" }
         ];
 
@@ -72,8 +72,7 @@ define(['mine_sweeper_game/gameEvents', 'globalEvents'],
         $scope.$on(globalEvents.boardEvents.bombSwept, handleBombSwept);
         $scope.selectGame = selectGame;
         $scope.selectGame($scope.selectedGame);
-        $scope.title = 'Select Game';
-        $scope.templateUri = 'views/gameController.html';
+        $scope.templateUri = 'views/game.html';
 
         $scope.$apply();
     }];

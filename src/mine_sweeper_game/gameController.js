@@ -71,6 +71,7 @@ define(['mine_sweeper_game/gameEvents', 'globalEvents'],
         $scope.$on(globalEvents.boardEvents.lastCellSwept, handleLastCellSwept);
         $scope.$on(globalEvents.boardEvents.bombSwept, handleBombSwept);
         $scope.selectGame = selectGame;
+        $scope.selectGame($scope.selectedGame);
         $scope.title = 'Select Game';
         $scope.templateUri = 'views/gameController.html';
 

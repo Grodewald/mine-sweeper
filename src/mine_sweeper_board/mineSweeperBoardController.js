@@ -33,13 +33,21 @@ define(['mine_sweeper_board/boardFactory',
             };
 
             flagCell = function(cell) {
+                if (!gameInProgress) {
+                    return;
+                }
                 if (!cell.hasBeenSwept) {
                     if (cell.style === 'flagged') {
+                        $scope.unflaggedBombs = $scope.unflaggedBombs + 1;
                         cell.style = 'question';
                     } else if (cell.style === 'question') {
                         cell.style = 'unswept';
-                    } else if (cell.style === 'unswept') {
+                    } else if (cell.style === 'unswept' && 
+                        $scope.unflaggedBombs >= 0) {
                         cell.style = 'flagged';
+                        $scope.unflaggedBombs = $scope.unflaggedBombs - 1;
+                    } else if (cell.style === 'unswept') {
+                        $scope.style = "question";
                     }
                 }
             };
@@ -55,14 +63,14 @@ define(['mine_sweeper_board/boardFactory',
             initScope = function(title) {
                 $scope.board = gameMatrix;
                 $scope.title = title;
-                $scope.boardInfo = board.width + ' x ' + board.height + 
-                ' bombs: ' + board.bombCount;
+                $scope.unflaggedBombs = board.bombCount;
                 firstCellSwept = false;
 
             };
             
             sweepCell = function (cell) {
-                if(cell.hasBeenSwept || !gameInProgress) {
+                if(cell.hasBeenSwept || !gameInProgress || 
+                    cell.style === 'flagged' || cell.style === 'question') {
                     return;
                 }
                 cell.style = 'swept';
@@ -83,6 +91,7 @@ define(['mine_sweeper_board/boardFactory',
                 }
                 if (cell.bomb === -1) {
                     $rootScope.$broadcast(boardEvents.bombSwept, []);
+                    $scope.unflaggedBombs = $scope.unflaggedBombs - 1;
                     return;
                 }
                 $scope.cellsToSweep = $scope.cellsToSweep - 1;

@@ -8,6 +8,9 @@ define(['mine_sweeper_game/gameEvents', 'globalEvents'],
             selectGame, handleTimeExpired;
 
         games = [
+            {   name : "Very Easy Game", width : 10, height : 10, bombs : 8,
+                description : "10x10 with 7 lives", lives: 7 },
+
             {   name : "Easy Game", width : 6, height : 6, bombs : 5,
                 description: "Traditional Game 6x6 with 5 bombs" },
 

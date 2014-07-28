@@ -1,7 +1,13 @@
-h1 {{title}}
-h2 {{ unflaggedBombs }} 
-h2 Remaining Cells to Sweep : {{ cellsToSweep }}
-table
-  tr(ng-repeat="row in board track by $index")
-    td(ng-repeat="cell in row")
-      div(ng-class="cell.style" ng-click="sweepCell(cell)" ng-right-click="flagCell(cell)") {{ cell.displayText }} 
+
+div(id="board-boardInfo")
+  div(id="board-unflagged") 
+    div(id="board-bombLabel") Bombs
+    div(id="board-bombsRemaining") {{ unflaggedBombs }} 
+  div(id="board-cells")
+    div(id="board-cellsLabel") Cells
+    div(id="board-cellsRemaining") {{ cellsToSweep }}
+div(id="board-board")
+  table
+    tr(ng-repeat="row in board track by $index")
+      td(ng-repeat="cell in row")
+        div(ng-class="cell.style" ng-click="sweepCell(cell)" ng-right-click="flagCell(cell)") {{ cell.displayText }} 

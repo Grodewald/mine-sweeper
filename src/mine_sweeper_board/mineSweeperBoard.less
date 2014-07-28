@@ -1,19 +1,20 @@
 .cellBase {
-    width: 30px;
-    height: 30px;
+    width: 22px;
+    height: 22px;
     margin: 0px;
+    padding: 0px;
     text-align: center;
-    border-width: 3px;
+    
 }
 
 .unswept {
     &:extend(.cellBase);
-    background-color: #000000;
+    background-color: #B3B3B5;
 }
 
 .swept {
     &:extend(.cellBase);
-    background-color: #B3B3B5;
+    background-color: #D8D8D8;
 }
 
 .flagged {
@@ -24,4 +25,42 @@
 .question {
     &:extend(.cellBase);
     background-color: #FFFF00;
+}
+
+#board-boardInfo {
+    position: relative;
+    height: 40px;
+}
+
+#board-unflagged {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 150px;
+}
+
+#board-cells {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 150px;
+}
+
+#board-bombLabel, #board-bombsRemaining,
+#board-cellsLabel, #board-cellsRemaining,
+#board-board {
+    display: table;
+    margin: 0 auto;
+}
+
+#board-board table {
+    border-collapse: collapse;
+    background-color: #848484;
+} 
+
+#board-board table, 
+#board-board tr,
+#board-board td {
+    border: 3px solid #424242;
+    padding: 1px;
 }

@@ -42,11 +42,11 @@ define([ 'globalEvents', 'mine_sweeper_board/boardEvents'],
                     } else if (cell.style === 'question') {
                         cell.style = 'unswept';
                     } else if (cell.style === 'unswept' && 
-                        $scope.unflaggedBombs >= 0) {
+                        $scope.unflaggedBombs > 0) {
                         cell.style = 'flagged';
                         $scope.unflaggedBombs = $scope.unflaggedBombs - 1;
                     } else if (cell.style === 'unswept') {
-                        $scope.style = "question";
+                        cell.style = 'question';
                     }
                 }
             };

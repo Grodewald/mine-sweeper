@@ -1,14 +1,15 @@
 /*global define, require */
-define(['angular'], function (angular) {
+define(['angular', 'service'], function (angular) {
     'use strict';
-    return angular.module('mineSweeper.controllers', [])
+    return angular.module('mineSweeper.controllers', ['mineSweeper.service'])
         .controller('mineSweeperBoardController', ['$scope', '$injector', 
-            '$rootScope',
-            function ($scope, $injector, $rootScope) {
+            '$rootScope', 'bombFactory',
+            function ($scope, $injector, $rootScope, bombFactory) {
                 require(['mine_sweeper_board/mineSweeperBoardController'],
                     function (ctrl) {
                         $injector.invoke(ctrl, this, {'$scope' : $scope,
-                        '$rootScope' : $rootScope});
+                        '$rootScope' : $rootScope, 
+                        'bombFactory' : bombFactory});
                     }
                 );
             }]

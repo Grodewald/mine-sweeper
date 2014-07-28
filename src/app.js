@@ -1,6 +1,7 @@
 /*jshint ignore:start*/ 
-define(['angular', 'controllers'], function(angular) {
-    var app = angular.module('mineSweeper',['mineSweeper.controllers']);
+define(['angular', 'controllers', 'service'], function(angular) {
+    var app = angular.module('mineSweeper',
+        ['mineSweeper.service', 'mineSweeper.controllers']);
     app.init = function () {
         angular.bootstrap(document, ['mineSweeper']);
     }

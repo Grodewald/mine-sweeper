@@ -1,12 +1,10 @@
 /*global define */
-define(['mine_sweeper_board/boardFactory',
-    'globalEvents',
-    'mine_sweeper_board/boardEvents'],
-    function(boardFactory, globalEvents, boardEvents) {
+define([ 'globalEvents', 'mine_sweeper_board/boardEvents'],
+    function(globalEvents, boardEvents) {
         'use strict';
 
-        return ['$scope', '$rootScope', 'bombFactory', 
-        function($scope, $rootScope, bombFactory) {
+        return ['$scope', '$rootScope', 'bombFactory', 'boardFactory',
+        function($scope, $rootScope, bombFactory, boardFactory) {
             var bombs, board, cellCreator, checkBoundry, firstCellSwept = false,
                 flagCell, gameMatrix, initGame, gameInProgress, 
                 initScope, sweepCell, sweepNeighbors;

@@ -22,7 +22,7 @@ o   Multiple lives (your play continues after you hit a bomb as long as you have
 
 o   Time limit + multiple lives
 
-·      I have left the graphics and styling pretty Spartan… due to time constraints…
+·      I have left the graphics and styling pretty Spartan… 
 
 o   ‘X’ means a bomb was in the cell… if you see this you lose
 
@@ -47,5 +47,3 @@ o   If you are working on a feature it should be obvious what files you edit to 
 
 o   Modules need to be independent of one another and should only depend on stable abstractions. The only dependencies between modules in my code are event names. These are stable abstractions.
 
- 
-o   Code that has a shelf life of more than a few weeks needs to be test driven. I test-drove the logic code, but got lazy on some of the UI code… so I do have some tests but not enough.
